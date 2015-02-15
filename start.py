@@ -17,7 +17,7 @@ def show_data():
 	ls = []
 	for info in coll.find():
 		temp = info
-		#print temp.pop('_id',None)
+		print temp.pop('_id',None)
 		ls.append(temp)
 	
 	return json.dumps(ls)
