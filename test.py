@@ -5,6 +5,10 @@ dataStr = 'test1'
 
 app = Flask(__name__)
 
+@app.route("")
+def raw():
+	return 'raw'
+
 @app.route("/test", methods = ['GET'])
 def show_data():
 		
