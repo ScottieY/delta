@@ -1,7 +1,7 @@
 from flask import Flask
 import json
 
-dataStr = 'test'
+dataStr = 'test1'
 
 app = Flask(__name__)
 
