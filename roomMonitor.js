@@ -127,6 +127,7 @@ function updateRoomState() {
 		id: tessel.deviceId().toString()
 	};
 
+	console.log(JSON.stringify(details));
 	//sendUpdatetoServer(details);
 
 }
