@@ -3,6 +3,8 @@ import json
 
 dataStr = 'test'
 
+app = Flask(__name__)
+
 @app.route("/test", methods = ['GET'])
 def show_data():
 		
