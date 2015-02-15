@@ -1,1 +1,1 @@
-web: python dealscraper/test.py
+web: python test.py
