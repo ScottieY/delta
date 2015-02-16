@@ -56,6 +56,7 @@ ambient.on('ready', function () {
 
 			if (threshBreaks < 9) {
 					talking = 0
+					tessel.led[1].write(0);
 					ambient.setSoundTrigger(soundTriggerThreshold);
 					console.log("People stopped talking");
 					roomChanged = 1;
@@ -75,6 +76,7 @@ ambient.on('ready', function () {
 
 			if (threshBreaks < 15) {
 				lightsOn = 0
+				tessel.led[0].write(0);
 				ambient.setLightTrigger(lightTriggerThreshold);
 				console.log("Lights turned off.");
 				roomChanged = 1; 
@@ -94,6 +96,7 @@ ambient.on('ready', function () {
 		lightsOn = 1;
 		updateRoomState();
 		ambient.clearLightTrigger();
+		tessel.led[0].write(1);
 	});
 
 	
@@ -102,6 +105,7 @@ ambient.on('ready', function () {
 		talking = 1;
 		updateRoomState();
 		ambient.clearSoundTrigger();
+		tessel.led[1].write(1);
 	});
 	
 } );
@@ -127,7 +131,7 @@ function updateRoomState() {
 		id: tessel.deviceId().toString()
 	};
 
-	console.log(JSON.stringify(details));
+	//console.log(JSON.stringify(details));
 	//sendUpdatetoServer(details);
 
 }
@@ -138,18 +142,14 @@ function sendUpdatetoServer(update) {
 
 	console.log(jsonText);
 
-	var header = {
-		'Content-Type': 'application/json',
-		'Content-Length': jsonText.length
+		var options = {
+		host: 'http://myflaskapp-roomy.rhcloud.com/update' + jsonText,
+		port: 80,
+		path: '',
+		method: 'POST',
 	};
 
-	var options = {
-		host: '172.17.72.242',
-		port: 5000,
-		path: 'path/to/post',
-		method: 'POST',
-		headers: headers
-	};
+	//console.log('update/' + jsonText)
 
 	var req = http.request(options, function(res) {
 		res.setEncoding('utf-8');
@@ -161,7 +161,7 @@ function sendUpdatetoServer(update) {
 		});
 
 		res.on('end', function() {
-			var resultObject = JSON.parse(responseString);
+			console.log(responseString);
 		});
 	});
 
@@ -169,7 +169,7 @@ function sendUpdatetoServer(update) {
 		console.log("Error posting data.", err);
 	});
 
-	//req.write(jsonText);
+	req.write('');
 	req.end();
 }
 
