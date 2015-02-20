@@ -1,0 +1,24 @@
+{
+    "name": "roomy-web",
+    "version": "0.0.0",
+    "description": "The companion web service for Roomy applications",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "express": "~4.9.x",
+        "pg": "4.x",
+        "body-parser": "1.x"
+    },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express",
+    "roomy"
+  ],
+  "license": "Hrishikesh Suresh"
+}
