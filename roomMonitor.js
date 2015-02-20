@@ -124,15 +124,14 @@ function updateRoomState() {
 	}
 
 	//Insert code to send room status to web service along with device id
-	console.log("The room is now", roomState, ". Tessel Device ID:", tessel.deviceId());
+	console.log("The room is now", roomState);
 
 	var details = {
-		state: roomState,
-		id: tessel.deviceId().toString()
+		avail: roomState,
+		devid: tessel.deviceId().toString()
 	};
 
-	//console.log(JSON.stringify(details));
-	//sendUpdatetoServer(details);
+	sendUpdatetoServer(details);
 
 }
 
@@ -140,16 +139,18 @@ function sendUpdatetoServer(update) {
 	var http = require('http');
 	var jsonText = JSON.stringify(update);
 
-	console.log(jsonText);
-
-		var options = {
-		host: 'http://myflaskapp-roomy.rhcloud.com/update' + jsonText,
-		port: 80,
-		path: '',
-		method: 'POST',
+	var headers = {
+	    'Content-Type': 'application/json',
+	    'Content-Length': jsonText.length
 	};
 
-	//console.log('update/' + jsonText)
+	var options = {
+		host: 'roomy-web.herokuapp.com',
+		port: 80,
+		path: '/roomstat',
+		method: 'POST',
+		headers: headers
+	};
 
 	var req = http.request(options, function(res) {
 		res.setEncoding('utf-8');
@@ -169,7 +170,7 @@ function sendUpdatetoServer(update) {
 		console.log("Error posting data.", err);
 	});
 
-	req.write('');
+	req.write(jsonText);
 	req.end();
 }
 
